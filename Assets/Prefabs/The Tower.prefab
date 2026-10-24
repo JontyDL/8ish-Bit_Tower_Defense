@@ -377,6 +377,12 @@ MonoBehaviour:
     CostGrowth: 1.5
     MaxLevel: 3
     Level: 0
+  PoisonImmunityUpgrade:
+    Step: 5
+    BaseCost: 75
+    CostGrowth: 1
+    MaxLevel: 1
+    Level: 0
   DamageUpgrade:
     Step: 5
     BaseCost: 45

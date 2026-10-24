@@ -6,6 +6,7 @@ public class UpgradeableObject : MonoBehaviour, IInteractable
 {
     [Header("Upgrade tuning (set per building prefab - unused stats are simply ignored)")]
     [SerializeField] private UpgradeStat HealthUpgrade = new UpgradeStat { Step = 15f, BaseCost = 40, MaxLevel = 3 };
+    [SerializeField] private UpgradeStat PoisonImmunityUpgrade = new UpgradeStat { BaseCost = 55, MaxLevel = 1 };
     [SerializeField] private UpgradeStat DamageUpgrade = new UpgradeStat { Step = 5f, BaseCost = 45, MaxLevel = 5 };
     [SerializeField] private UpgradeStat RangeUpgrade = new UpgradeStat { Step = 5f, BaseCost = 70, MaxLevel = 3 };
     [SerializeField] private UpgradeStat AttackRateUpgrade = new UpgradeStat { Step = 0.15f, BaseCost = 90, MaxLevel = 3 };
@@ -47,6 +48,11 @@ public class UpgradeableObject : MonoBehaviour, IInteractable
     private List<UpgradeOption> options;
 
     public bool IsUpgradeable => !TryGetComponent<DeadManBomb>(out _) && !TryGetComponent<SpellAOE>(out _);
+    public bool IsPoisonImmune { get; private set; }
+    private void GrantPoisonImmunity()
+    {
+        IsPoisonImmune = true;
+    }
 
     public IReadOnlyList<UpgradeOption> Options
     {
@@ -118,51 +124,40 @@ public class UpgradeableObject : MonoBehaviour, IInteractable
         if (BuildingHealth != null)
         {
             // SetMaxHealth refills to full by default, which is how your Health script describes upgrading.
-            AddOption("Health", HealthUpgrade,
-                () => BuildingHealth.MaxHealth,
-                v => BuildingHealth.SetMaxHealth(v));
+            AddOption("Health", HealthUpgrade, () => BuildingHealth.MaxHealth, v => BuildingHealth.SetMaxHealth(v));
+        }
+
+        // Poison immunity is available to all buildings with a Health component.
+        if (BuildingHealth != null && (BuildingScript != null || BuildingAttacker != null || Mine != null || Lumber != null))
+        {
+            options.Add(new UpgradeOption("Poison Immunity", PoisonImmunityUpgrade, () => IsPoisonImmune ? "Yes" : "No", () => "Yes", GrantPoisonImmunity));
         }
 
         if (Lumber != null)
         {
-            AddOption("Gold Per Kill", LumberBonusUpgrade,
-                () => Lumber.BonusAmount,
-                v => Lumber.SetBonus(Mathf.RoundToInt(v)));
+            AddOption("Gold Per Kill", LumberBonusUpgrade, () => Lumber.BonusAmount, v => Lumber.SetBonus(Mathf.RoundToInt(v)));
         }
         else if (Mine != null)
         {
-            AddOption("Gold Per Mine", GoldAmountUpgrade,
-                () => Mine.GoldAmount,
-                v => Mine.GoldAmount = Mathf.RoundToInt(v));
+            AddOption("Gold Per Mine", GoldAmountUpgrade, () => Mine.GoldAmount, v => Mine.GoldAmount = Mathf.RoundToInt(v));
 
-            AddOption("Mine Rate", GoldDelayUpgrade,
-                () => Mine.MineDelay,
-                v => Mine.MineDelay = v,
-                MinGoldDelay);
+            AddOption("Mine Rate", GoldDelayUpgrade, () => Mine.MineDelay, v => Mine.MineDelay = v, MinGoldDelay);
         }
         else if (BuildingAttacker != null)
         {
-            AddOption("Damage", DamageUpgrade,
-                () => BuildingAttacker.Damage,
-                v => BuildingAttacker.Damage = v);
+            AddOption("Damage", DamageUpgrade, () => BuildingAttacker.Damage, v => BuildingAttacker.Damage = v);
 
             if (BuildingScript != null && BuildingScript.HasRange)
             {
-                AddOption("Range", RangeUpgrade,
-                    () => BuildingScript.Range,
-                    v => BuildingScript.Range = v);
+                AddOption("Range", RangeUpgrade, () => BuildingScript.Range, v => BuildingScript.Range = v);
             }
 
             // The main tower only gets damage (and range) upgrades.
             if (BuildingScript == null || !BuildingScript.IsMainTower)
             {
-                AddOption("Attack Rate", AttackRateUpgrade,
-                    () => BuildingAttacker.Rate,
-                    v => BuildingAttacker.Rate = v);
+                AddOption("Attack Rate", AttackRateUpgrade, () => BuildingAttacker.Rate, v => BuildingAttacker.Rate = v);
 
-                AddOption("Knockback", KnockbackUpgrade,
-                    () => BuildingAttacker.Knockback,
-                    v => BuildingAttacker.Knockback = v);
+                AddOption("Knockback", KnockbackUpgrade, () => BuildingAttacker.Knockback, v => BuildingAttacker.Knockback = v);
             }
         }
     }

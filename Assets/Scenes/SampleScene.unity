@@ -1131,8 +1131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeatherManager
   WeatherEventPrefabs:
-  - {fileID: 765354168903369214, guid: 37d0c58075442b7439139b2d77611c7a, type: 3}
+  - {fileID: 2184549317169661766, guid: b185541b462cc76498417144cfad54ab, type: 3}
   - {fileID: 1351979763650391041, guid: aff76254b6cebe841b4a6b1842d909eb, type: 3}
+  - {fileID: 765354168903369214, guid: 37d0c58075442b7439139b2d77611c7a, type: 3}
   FirstWeatherWave: 4
   EventChance: 0.4
 --- !u!1 &260544953
