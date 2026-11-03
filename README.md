@@ -26,6 +26,11 @@ There are 5 tools in the players' toolkit that they can use to defend against th
 
 <img width="1116" height="617" alt="image" src="https://github.com/user-attachments/assets/5c56e3a4-6ba3-47d9-a374-b9f96c4f5684" />
 
+The Spell was then "animated" using the shader graph and a flow map to offset the uv's slightly, and give it this effect:
+
+![hippo](https://giphy.com/gifs/d4KHF4X5GOFq41Df4J/giphy.gif)
+
+<img width="1024" height="430" alt="SpellShaderGraph" src="https://github.com/user-attachments/assets/f5968a68-4fc9-4bfe-aa2e-611e4a77af6a" />
 
 
 The tree's sway in the wind thanks to a shader made by Nicrom, you can access it here for free:
