@@ -30,11 +30,28 @@ The Spell was then "animated" using the shader graph and a flow map to offset th
 
 <img width="1024" height="430" alt="SpellShaderGraph" src="https://github.com/user-attachments/assets/f5968a68-4fc9-4bfe-aa2e-611e4a77af6a" />
 
-I then went on a shader spree and added a sea (animated via sine and cos waves) around the map and a skybox of stars that twinkle:
-(apologies for the low quality, GIFs are limited to 10mb)
+I then went on a shader spree and added a sea (animated via sine and cos waves) around the map and a skybox of stars that twinkle:  
+(apologies for the low quality, GIFs are limited to 10mb)  
+
 <img width="768" height="322" alt="Background" src="https://github.com/user-attachments/assets/75517fd5-a2d9-4a6d-bbca-2324a1918e1a" />
 
+I then enabled the player to upgrade their defenders, such as their attack rate, range, and health:  
 
+<img width="768" height="322" alt="Upgrades" src="https://github.com/user-attachments/assets/c4ad6dbf-dbe5-4138-b7b7-4a16e58f16bc" />
+
+And finally the most recent feature has introduced weather events! They interact in different ways and have a random chance of occuring at the start of each wave.  
+There is a fog that covers the whole map, and reduces the attack range of all defenders:  
+<img width="1106" height="615" alt="image" src="https://github.com/user-attachments/assets/940dc463-10d7-4945-898f-d5089a2c3ec7" />  
+
+There is a poison that deals tick damage to anything inside it (unless the defender has been upgraded to have poison immunity):  
+
+<img width="768" height="322" alt="PoisonImmunity" src="https://github.com/user-attachments/assets/316b0e7b-7b2c-457b-9a09-b858ab41f4c7" />
+
+And there is also a lightning strike that hit's random positions across the map and deals a large damage to anything near to where it strikes:
+
+<img width="600" height="580" alt="Screenshot 2026-11-03 104205" src="https://github.com/user-attachments/assets/4f511a1d-436e-4a25-a1b4-af2e5cef1c30" />
+
+All the meshes for these weather events have been built procedurally, since I am not an artist :/
 
 The tree's sway in the wind thanks to a shader made by Nicrom, you can access it here for free:
 https://assetstore-fallback.unity.com/packages/vfx/shaders/low-poly-wind-182586
